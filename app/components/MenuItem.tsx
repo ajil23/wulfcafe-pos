@@ -1,8 +1,23 @@
+interface MenuItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
+
+interface MenuItemProps {
+  item: MenuItem;
+  quantity: number;
+  onUpdateQuantity: (id: number, newQuantity: number) => void;
+}
+
 export default function MenuItem({
   item,
   quantity,
   onUpdateQuantity,
-}) {
+}: MenuItemProps) {
   const handleIncrement = () => {
     onUpdateQuantity(item.id, quantity + 1);
   };
@@ -15,6 +30,10 @@ export default function MenuItem({
     }
   };
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = 'https://via.placeholder.com/300x200/F9F2ED/313131?text=No+Image';
+  };
+
   return (
     <div className="bg-white rounded-xl p-3 shadow-sm border border-[#E3E3E3] hover:shadow-md transition-shadow flex flex-col h-full">
       <div className="aspect-[4/3] rounded-lg overflow-hidden mb-2">
@@ -22,9 +41,7 @@ export default function MenuItem({
           src={item.image}
           alt={item.name}
           className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/300x200/F9F2ED/313131?text=No+Image';
-          }}
+          onError={handleImageError}
         />
       </div>
 

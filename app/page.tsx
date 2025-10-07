@@ -6,25 +6,63 @@ import MenuItem from './components/MenuItem';
 import CartSummary from './components/CartSummary';
 
 const menuItems = [
-  { id: 1, name: 'Nasi Goreng Spesial', description: 'Telur, ayam, acar, kerupuk', price: 25000, image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300&h=200&fit=crop', category: 'Makanan' },
-  { id: 2, name: 'Mie Ayam Pangsit', description: 'Mie ayam + pangsit goreng + kuah hangat', price: 22000, image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop', category: 'Makanan' },
-  { id: 3, name: 'Bakso Urat Komplit', description: 'Bakso urat, mie, bihun, tahu, kuah gurih', price: 18000, image: 'https://images.unsplash.com/photo-1588137378633-dea1336ce1e2?w=300&h=200&fit=crop', category: 'Makanan' },
-  { id: 4, name: 'Soto Ayam Lamongan', description: 'Soto ayam + serundeng + kerupuk udang', price: 20000, image: 'https://images.unsplash.com/photo-1613844237701-8f3664fc2eff?w=300&h=200&fit=crop', category: 'Makanan' },
-  { id: 5, name: 'Ayam Goreng Kalasan', description: 'Ayam goreng bumbu rempah khas Yogyakarta', price: 28000, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=300&h=200&fit=crop', category: 'Makanan' },
-  { id: 6, name: 'Es Teh Manis', description: 'Teh tubruk dingin dengan gula asli', price: 5000, image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=300&h=200&fit=crop', category: 'Minuman' },
-  { id: 7, name: 'Es Jeruk', description: 'Jeruk segar peras dengan es batu', price: 8000, image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&h=200&fit=crop', category: 'Minuman' },
-  { id: 8, name: 'Jus Alpukat', description: 'Alpukat segar blender dengan susu', price: 12000, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=300&h=200&fit=crop', category: 'Minuman' },
-  { id: 9, name: 'Pisang Goreng', description: 'Pisang goreng kriuk dengan taburan gula', price: 10000, image: 'https://images.unsplash.com/photo-1664993090321-b2caff794431?q=300&h=200&fit=crop', category: 'Snack' },
-  { id: 10, name: 'Tahu Isi', description: 'Tahu goreng isi sayuran dan bumbu', price: 8000, image: 'https://images.unsplash.com/photo-1680173073730-852e0ec93bec?q=300&h=200&fit=crop', category: 'Snack' },
+  // coffee
+  { id: 1, name: 'Butterscotch Latte', description: 'Perpaduan creamy & manis lembut butterscotch.', price: 25000, image: 'https://images.unsplash.com/photo-1626595444746-59219e6838ac?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 2, name: 'Gula Aren Latte', description: 'Signature latte dengan sentuhan lokal manis alami.', price: 22000, image: 'https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 3, name: 'Americano', description: 'Kopi hitam klasik, aroma tajam tanpa gula.', price: 18000, image: 'https://images.unsplash.com/photo-1580661869408-55ab23f2ca6e?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 4, name: 'Cappuccino', description: 'Foam lembut dengan keseimbangan espresso & susu.', price: 20000, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 5, name: 'Espresso', description: 'Satu shot energi murni untuk kick pagi Anda.', price: 28000, image: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 6, name: 'Caramel Macchiato', description: 'Manis karamel berpadu espresso pekat.', price: 5000, image: 'https://images.unsplash.com/photo-1662047102608-a6f2e492411f?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 7, name: 'Vanilla Latte', description: 'Lembut dengan aroma vanilla yang menenangkan.', price: 8000, image: 'https://images.unsplash.com/photo-1504194472231-5a5294eddc43?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 8, name: 'Hazelnut Coffee', description: 'Kacang hazelnut berpadu rasa kopi khas.', price: 12000, image: 'https://images.unsplash.com/photo-1598831745385-0c404c7034a9?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 9, name: 'Mocha Fusion', description: 'Kopi dan cokelat yang berpadu sempurna.', price: 10000, image: 'https://images.unsplash.com/photo-1618576230663-9714aecfb99a?q=300&h=200&fit=crop', category: 'Coffee' },
+  { id: 10, name: 'Cold Brew Classic', description: 'Diseduh dingin 12 jam untuk rasa halus & kaya.', price: 8000, image: 'https://images.unsplash.com/photo-1558122104-355edad709f6?q=300&h=200&fit=crop', category: 'Coffee' },
+  // healthy drinks
+  { id: 11, name: 'Green Detox', description: 'Spinach, apple, pineapple untuk pembersihan alami.', price: 8000, image: 'https://images.unsplash.com/photo-1613637028036-ca0b31a4ad12?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  { id: 12, name: 'Energy Booster', description: 'Banana, oat, honey, peanut, oat milk.', price: 8000, image: 'https://images.unsplash.com/photo-1664665239609-c07159ff308c?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  { id: 13, name: 'Immune Shield', description: 'Orange, carrot, ginger, turmeric — imun booster alami.', price: 8000, image: 'https://images.unsplash.com/photo-1566846128021-b940b0eec910?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  { id: 14, name: 'Skin Glow', description: 'Strawberry, chia seed, collagen — cantik dari dalam.', price: 8000, image: 'https://images.unsplash.com/photo-1731460443757-8e6efe800423?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  { id: 15, name: 'Protein Power', description: 'Chocolate whey, almond, banana — otot siap latihan.', price: 8000, image: 'https://images.unsplash.com/photo-1595177924963-751716e81b89?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  { id: 16, name: 'Calm Mind', description: 'Blueberry, lavender, yogurt — relaksasi sebelum tidur.', price: 8000, image: 'https://images.unsplash.com/photo-1662186341099-56d0131327b5?q=300&h=200&fit=crop', category: 'Healthy Drinks' },
+  // mocktails
+  { id: 17, name: 'Virgin Mojito', description: 'Mint segar & lime soda klasik.', price: 8000, image: 'https://images.unsplash.com/photo-1653542772393-71ffa417b1c4?q=300&h=200&fit=crop', category: 'Mocktails' },
+  { id: 18, name: 'Summer Breeze', description: 'Lychee, orange, dan mint yang menyegarkan.', price: 8000, image: 'https://images.unsplash.com/photo-1599767431130-41b1c51d9a7b?q=300&h=200&fit=crop', category: 'Mocktails' },
+  { id: 19, name: 'Berry Sunrise', description: 'Strawberry & lemon soda berpadu warna sunset.', price: 8000, image: 'https://images.unsplash.com/photo-1497534446932-c925b458314e?q=300&h=200&fit=crop', category: 'Mocktails' },
+  { id: 20, name: 'Tropical Sunset', description: 'Mango, passionfruit & soda tropis.', price: 8000, image: 'https://images.unsplash.com/photo-1546173159-315724a31696?q=300&h=200&fit=crop', category: 'Mocktails' },
+  { id: 21, name: 'Apple Mint Cooler', description: 'Apel hijau & daun mint segar.', price: 8000, image: 'https://images.unsplash.com/photo-1632935253723-f37c5a038f41?q=300&h=200&fit=crop', category: 'Mocktails' },
+  { id: 22, name: 'Blue Lagoon', description: 'Campuran biru lemon soda non-alkohol.', price: 8000, image: 'https://images.unsplash.com/photo-1621330716555-5cad596c4562?q=300&h=200&fit=crop', category: 'Mocktails' },
+  // blends & smoothies
+  { id: 23, name: 'Avocado Blend', description: 'Lembut dan creamy dengan alpukat segar.', price: 8000, image: 'https://images.unsplash.com/photo-1630252595285-3bbcb51378d8?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  { id: 24, name: 'Mango Blend', description: 'Manis tropis dengan rasa mangga alami.', price: 8000, image: 'https://images.unsplash.com/photo-1697642452436-9c40773cbcbb?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  { id: 25, name: 'Mix Berry Blend', description: 'Strawberry, blueberry, raspberry, sensasi segar.', price: 8000, image: 'https://images.unsplash.com/photo-1635970452476-5f28499fa67c?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  { id: 26, name: 'Banana Peanut Blend', description: 'Kombinasi gurih kacang & manis pisang.', price: 8000, image: 'https://images.unsplash.com/photo-1685967836529-b0e8d6938227?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  { id: 27, name: 'Chocolate Almond Smoothie', description: 'Cokelat pekat dengan aroma almond.', price: 8000, image: 'https://images.unsplash.com/photo-1626200949108-510618c118c3?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  { id: 28, name: 'Strawberry Yogurt Smoothie', description: 'Asam segar yogurt & strawberry.', price: 8000, image: 'https://images.unsplash.com/photo-1647275485937-890ba327b0ae?q=300&h=200&fit=crop', category: 'Blends & Smoothies' },
+  // snacks
+  { id: 29, name: 'Potato Wedges with Cheese', description: 'Kentang panggang dengan saus keju.', price: 15000, image: 'https://images.unsplash.com/photo-1623238913973-21e45cced554?q=300&h=200&fit=crop', category: 'Snacks' },
+  { id: 30, name: 'Chicken Pop Bites', description: 'Gurih renyah, pas untuk teman ngopi.', price: 18000, image: 'https://images.unsplash.com/photo-1562967916-eb82221dfb92?q=300&h=200&fit=crop', category: 'Snacks' },
+  { id: 31, name: 'Crispy Tofu', description: 'Tahu garing dengan bumbu khas.', price: 20000, image: 'https://images.unsplash.com/photo-1644143452702-e883f31d7476?q=300&h=200&fit=crop', category: 'Snacks' },
+  { id: 32, name: 'Nachos with Salsa', description: 'Crunchy nachos dengan saus tomat segar.', price: 12000, image: 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?q=300&h=200&fit=crop', category: 'Snacks' },
+  { id: 33, name: 'French Fries', description: 'Kentang goreng klasik, tak pernah salah', price: 10000, image: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?q=300&h=200&fit=crop', category: 'Snacks' },
+  { id: 34, name: 'Garlic Bread', description: 'Roti panggang aroma bawang gurih.', price: 15000, image: 'https://images.unsplash.com/photo-1573140401552-3fab0b24306f?q=300&h=200&fit=crop', category: 'Snacks' },
+  // food
+  { id: 35, name: 'Grilled Chicken Rice Bowl', description: 'Ayam panggang dengan saus pedas manis.', price: 35000, image: 'https://images.unsplash.com/photo-1592011432621-f7f576f44484?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 36, name: 'Salmon Teriyaki Bowl', description: 'Salmon lembut & saus teriyaki gurih.', price: 30000, image: 'https://images.unsplash.com/photo-1728963228980-71c76178616a?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 37, name: 'Chicken Caesar Salad', description: 'Salad segar dengan dressing creamy.', price: 32000, image: 'https://images.unsplash.com/photo-1670237735381-ac5c7fa72c51?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 38, name: 'Tuna Sandwich', description: 'Roti panggang isi tuna & sayuran renyah.', price: 40000, image: 'https://images.unsplash.com/photo-1672078857105-a1229a7033b8?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 39, name: 'Pasta Creamy Mushroom', description: 'Krim jamur gurih khas Italia.', price: 45000, image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 40, name: 'Nasi Goreng Wulf Signature', description: 'Spesial house recipe, pedas pas.', price: 28000, image: 'https://images.unsplash.com/photo-1680674774705-90b4904b3a7f?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 41, name: 'Spaghetti Aglio Olio', description: 'Simple tapi classy, minyak zaitun & cabai.', price: 28000, image: 'https://images.unsplash.com/photo-1622973536968-3ead9e780960?q=300&h=200&fit=crop', category: 'Food' },
+  { id: 42, name: 'Chicken Steak with Veggies', description: 'Ayam panggang & sayur rebus sehat.', price: 28000, image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=300&h=200&fit=crop', category: 'Food' },
 ];
 
-const categories = ['Semua', 'Makanan', 'Minuman', 'Snack'];
+const categories = ['all', 'Coffee', 'Healthy Drinks', 'Mocktails', 'Blends & Smoothies', 'Snacks', 'Food'];
 
 export default function MenuPage() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Semua');
+  const [selectedCategory, setSelectedCategory] = useState('all'); // Default ke 'all'
 
   const getQuantity = (id) => {
     const item = cart.find((item) => item.id === id);
@@ -59,7 +97,7 @@ export default function MenuPage() {
   const filteredItems = menuItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'Semua' || item.category === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory; // Ubah 'Semua' jadi 'all'
     return matchesSearch && matchesCategory;
   });
 
@@ -71,24 +109,14 @@ export default function MenuPage() {
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center mb-3">
-            <div>
-              <h1 className="text-xl font-bold text-[#313131] md:text-2xl">Wulf Cafe</h1>
-              <p className="text-[#5A5A5A] text-sm mt-1 md:text-base">Pilih menu favoritmu!</p>
+            <div className="flex items-center gap-3">
+              <img
+                src="/logo/wulflogo.jpeg"
+                alt="Cafe Logo"
+                className="h-8 w-8 object-contain md:h-12 md:w-12"
+              />
+              <h1 className="text-xl font-bold text-[#313131] md:text-2xl">Cafe</h1>
             </div>
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="relative p-2 text-[#313131] hover:text-[#C67C4E] transition-colors"
-              aria-label="Lihat keranjang"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#C67C4E] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
-                  {totalItems}
-                </span>
-              )}
-            </button>
           </div>
 
           <div className="relative mb-3">
@@ -115,13 +143,12 @@ export default function MenuPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
-                  selectedCategory === category
+                className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${selectedCategory === category
                     ? 'bg-[#C67C4E] text-white'
                     : 'bg-[#EDD6C8] text-[#313131] hover:bg-[#d8c0b0]'
-                }`}
+                  }`}
               >
-                {category}
+                {category === 'all' ? 'All' : category}
               </button>
             ))}
           </div>
@@ -183,6 +210,7 @@ export default function MenuPage() {
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         onClearCart={clearCart}
+        onUpdateQuantity={updateQuantity}
       />
     </div>
   );

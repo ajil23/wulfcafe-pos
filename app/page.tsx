@@ -1,11 +1,23 @@
-// page.jsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import MenuItem from './components/MenuItem';
 import CartSummary from './components/CartSummary';
 
-const menuItems = [
+interface MenuItemType {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
+
+interface CartItem extends MenuItemType {
+  quantity: number;
+}
+
+const menuItems: MenuItemType[] = [
   // coffee
   { id: 1, name: 'Butterscotch Latte', description: 'Perpaduan creamy & manis lembut butterscotch.', price: 25000, image: 'https://images.unsplash.com/photo-1626595444746-59219e6838ac?q=300&h=200&fit=crop', category: 'Coffee' },
   { id: 2, name: 'Gula Aren Latte', description: 'Signature latte dengan sentuhan lokal manis alami.', price: 22000, image: 'https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=300&h=200&fit=crop', category: 'Coffee' },
@@ -59,50 +71,83 @@ const menuItems = [
 const categories = ['all', 'Coffee', 'Healthy Drinks', 'Mocktails', 'Blends & Smoothies', 'Snacks', 'Food'];
 
 export default function MenuPage() {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all'); // Default ke 'all'
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getQuantity = (id) => {
+  // Load cart dari localStorage saat komponen mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('wulfCafeCart');
+    if (savedCart) {
+      try {
+        const parsedCart: CartItem[] = JSON.parse(savedCart);
+        setCart(parsedCart);
+      } catch (error) {
+        console.error('Error parsing cart data:', error);
+        setCart([]);
+      }
+    }
+    setIsLoading(false);
+  }, []);
+
+  // Function untuk simpan cart ke localStorage
+  const saveCartToStorage = (cartData: CartItem[]) => {
+    localStorage.setItem('wulfCafeCart', JSON.stringify(cartData));
+  };
+
+  const getQuantity = (id: number): number => {
     const item = cart.find((item) => item.id === id);
     return item ? item.quantity : 0;
   };
 
-  const updateQuantity = (id, newQty) => {
+  const updateQuantity = (id: number, newQty: number) => {
+    let updatedCart: CartItem[];
+    
     if (newQty <= 0) {
-      setCart((prev) => prev.filter((item) => item.id !== id));
+      updatedCart = cart.filter((item) => item.id !== id);
     } else {
       const item = menuItems.find((m) => m.id === id);
       if (!item) return;
 
-      setCart((prev) => {
-        const existingItem = prev.find((cartItem) => cartItem.id === id);
-        if (existingItem) {
-          return prev.map((cartItem) =>
+      updatedCart = cart.some(cartItem => cartItem.id === id)
+        ? cart.map((cartItem) =>
             cartItem.id === id ? { ...cartItem, quantity: newQty } : cartItem
-          );
-        } else {
-          return [...prev, { ...item, quantity: newQty }];
-        }
-      });
+          )
+        : [...cart, { ...item, quantity: newQty }];
     }
+
+    setCart(updatedCart);
+    saveCartToStorage(updatedCart); // ✅ Auto-save setiap perubahan
   };
 
   const clearCart = () => {
     setCart([]);
+    localStorage.removeItem('wulfCafeCart'); // ✅ Clear storage juga
     setIsCartOpen(false);
   };
 
   const filteredItems = menuItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory; // Ubah 'Semua' jadi 'all'
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F9F2ED] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C67C4E] mx-auto"></div>
+          <p className="mt-4 text-[#5A5A5A]">Memuat pesanan...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F9F2ED] flex flex-col">

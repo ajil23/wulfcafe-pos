@@ -1,14 +1,46 @@
+interface MenuItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+}
+
+interface CartItem extends MenuItem {
+  quantity: number;
+}
+
+interface CartSummaryProps {
+  cart: CartItem[];
+  isOpen: boolean;
+  onClose: () => void;
+  onClearCart: () => void;
+  onUpdateQuantity: (id: number, newQuantity: number) => void;
+}
+
 export default function CartSummary({
   cart,
   isOpen,
   onClose,
   onClearCart,
   onUpdateQuantity,
-}) {
+}: CartSummaryProps) {
   if (!isOpen) return null;
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleProceedToPayment = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Tidak perlu save lagi karena cart sudah selalu up-to-date di localStorage
+    window.location.href = '/payment';
+  };
+
+  const handleClearCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClearCart();
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-end z-50 md:items-center md:justify-center" onClick={onClose}>
@@ -79,16 +111,13 @@ export default function CartSummary({
             </div>
             <div className="flex gap-2">
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClearCart();
-                }}
+                onClick={handleClearCart}
                 className="flex-1 py-2.5 text-sm text-[#C67C4E] border border-[#C67C4E] rounded-lg hover:bg-[#F9F2ED] transition-colors"
               >
                 Kosongkan
               </button>
               <button
-                onClick={(e) => e.stopPropagation()}
+                onClick={handleProceedToPayment}
                 className="flex-1 bg-[#C67C4E] hover:bg-[#A0633E] text-white font-bold py-2.5 rounded-lg transition-colors"
               >
                 Lanjut Bayar

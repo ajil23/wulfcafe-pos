@@ -1,4 +1,3 @@
-// components/MenuItem.jsx
 export default function MenuItem({
   item,
   quantity,

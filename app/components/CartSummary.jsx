@@ -1,9 +1,9 @@
-// components/CartSummary.jsx
 export default function CartSummary({
   cart,
   isOpen,
   onClose,
   onClearCart,
+  onUpdateQuantity,
 }) {
   if (!isOpen) return null;
 
@@ -34,15 +34,35 @@ export default function CartSummary({
           ) : (
             <div className="space-y-4">
               {cart.map((item) => (
-                <div key={item.id} className="flex justify-between">
-                  <div>
+                <div key={item.id} className="flex justify-between items-center gap-3">
+                  <div className="flex-1">
                     <div className="font-medium text-[#313131]">{item.name}</div>
                     <div className="text-sm text-[#5A5A5A]">Rp {item.price.toLocaleString('id-ID')}</div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-bold text-[#C67C4E]">{item.quantity}x</div>
-                    <div className="text-[#C67C4E] font-bold">
-                      Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                  <div className="flex items-center gap-3">
+                    <div className="flex items-center border border-[#E3E3E3] rounded-full">
+                      <button
+                        onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
+                        className="w-8 h-8 flex items-center justify-center text-[#313131] hover:bg-[#F9F2ED] rounded-l-full"
+                        aria-label={`Kurangi ${item.name}`}
+                      >
+                        <span className="text-sm font-bold">−</span>
+                      </button>
+                      <span className="px-3 font-bold text-[#313131] min-w-[32px] text-center text-sm">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+                        className="w-8 h-8 flex items-center justify-center text-[#313131] hover:bg-[#F9F2ED] rounded-r-full"
+                        aria-label={`Tambah ${item.name}`}
+                      >
+                        <span className="text-sm font-bold">+</span>
+                      </button>
+                    </div>
+                    <div className="text-right min-w-[80px]">
+                      <div className="text-[#C67C4E] font-bold text-sm">
+                        Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                      </div>
                     </div>
                   </div>
                 </div>

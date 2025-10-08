@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import MenuItem from './components/MenuItem';
 import CartSummary from './components/CartSummary';
+import { Search } from 'lucide-react';
 
 interface MenuItemType {
   id: number;
@@ -104,7 +105,7 @@ export default function MenuPage() {
 
   const updateQuantity = (id: number, newQty: number) => {
     let updatedCart: CartItem[];
-    
+
     if (newQty <= 0) {
       updatedCart = cart.filter((item) => item.id !== id);
     } else {
@@ -113,18 +114,18 @@ export default function MenuPage() {
 
       updatedCart = cart.some(cartItem => cartItem.id === id)
         ? cart.map((cartItem) =>
-            cartItem.id === id ? { ...cartItem, quantity: newQty } : cartItem
-          )
+          cartItem.id === id ? { ...cartItem, quantity: newQty } : cartItem
+        )
         : [...cart, { ...item, quantity: newQty }];
     }
 
     setCart(updatedCart);
-    saveCartToStorage(updatedCart); // ✅ Auto-save setiap perubahan
+    saveCartToStorage(updatedCart);
   };
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem('wulfCafeCart'); // ✅ Clear storage juga
+    localStorage.removeItem('wulfCafeCart');
     setIsCartOpen(false);
   };
 
@@ -151,73 +152,73 @@ export default function MenuPage() {
 
   return (
     <div className="min-h-screen bg-[#F9F2ED] flex flex-col">
+      {/* Header dengan layout lebih lebar untuk desktop */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex justify-between items-center mb-3">
-            <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-4">
               <img
                 src="/logo/wulflogo.jpeg"
                 alt="Cafe Logo"
-                className="h-8 w-8 object-contain md:h-12 md:w-12"
+                className="h-10 w-10 object-contain md:h-14 md:w-14 lg:h-16 lg:w-16"
               />
-              <h1 className="text-xl font-bold text-[#313131] md:text-2xl">Cafe</h1>
+              <div>
+                <h1 className="text-2xl font-bold text-[#313131] md:text-3xl lg:text-4xl">Cafe</h1>
+              </div>
             </div>
+            <div className="bg-[#C67C4E] text-white px-4 py-2 rounded-full font-bold text-sm md:text-base lg:text-lg shadow-md">Meja 5</div>
           </div>
 
-          <div className="relative mb-3">
+          {/* Search Bar lebih lebar */}
+          <div className="relative mb-4 w-full">
+            {/* icon lucide react */}
+            <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 text-[#5A5A5A] h-6 w-6' />
             <input
               type="text"
-              placeholder="Cari menu..."
+              placeholder="Cari menu favoritmu..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-2 pl-10 border border-[#E3E3E3] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C67C4E] focus:border-[#C67C4E] text-[#313131]"
+              className="w-full px-5 py-3 pl-12 border border-[#E3E3E3] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C67C4E] focus:border-[#C67C4E] text-[#313131] text-base md:text-lg"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#5A5A5A]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
           </div>
 
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {/* Category Filter dengan lebih banyak item visible */}
+          <div className="flex gap-3 overflow-x-auto pb-3 scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${selectedCategory === category
-                    ? 'bg-[#C67C4E] text-white'
-                    : 'bg-[#EDD6C8] text-[#313131] hover:bg-[#d8c0b0]'
-                  }`}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0 ${selectedCategory === category
+                  ? 'bg-[#C67C4E] text-white shadow-md'
+                  : 'bg-[#EDD6C8] text-[#313131] hover:bg-[#d8c0b0] hover:shadow-sm'
+                  } md:text-base md:px-6 md:py-3`}
               >
-                {category === 'all' ? 'All' : category}
+                {category === 'all' ? 'All Menu' : category}
               </button>
             ))}
           </div>
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-24 md:pb-32">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      {/* Main content dengan grid yang lebih optimal */}
+      <main className="flex-1 overflow-y-auto pb-24 md:pb-32 lg:pb-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {filteredItems.length === 0 ? (
-            <div className="text-center py-12">
+            <div className="text-center py-16 md:py-24">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-16 w-16 mx-auto text-[#5A5A5A] mb-4"
+                className="h-20 w-20 mx-auto text-[#5A5A5A] mb-6 md:h-24 md:w-24"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-[#5A5A5A] text-lg">Menu tidak ditemukan</p>
-              <p className="text-[#A0A0A0] text-sm mt-2">Coba kata kunci atau kategori lain</p>
+              <p className="text-[#5A5A5A] text-xl md:text-2xl mb-2">Menu tidak ditemukan</p>
+              <p className="text-[#A0A0A0] text-base md:text-lg">Coba kata kunci atau kategori lain</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 md:gap-6">
               {filteredItems.map((item) => (
                 <MenuItem
                   key={item.id}
@@ -231,21 +232,26 @@ export default function MenuPage() {
         </div>
       </main>
 
+      {/* Bottom cart summary lebih lebar */}
       {totalItems > 0 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-[#E3E3E3] shadow-lg z-20">
-          <div className="max-w-4xl mx-auto px-4 py-2.5 flex justify-between items-center">
-            <div>
-              <p className="text-xs text-[#5A5A5A] md:text-sm">Total ({totalItems} item)</p>
-              <p className="text-base font-bold text-[#C67C4E] md:text-lg">
-                Rp {totalPrice.toLocaleString('id-ID')}
-              </p>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+            <div className="flex justify-between items-center">
+              <div>
+                <p className="text-sm text-[#5A5A5A] md:text-base">Total ({totalItems} item)</p>
+                <p className="text-lg font-bold text-[#C67C4E] md:text-xl lg:text-2xl">
+                  Rp {totalPrice.toLocaleString('id-ID')}
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="bg-[#C67C4E] hover:bg-[#A0633E] text-white font-bold px-6 py-3 rounded-full text-sm shadow transition-colors md:px-8 md:py-3 md:text-base lg:px-10"
+                >
+                  Lihat Pesanan
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="bg-[#C67C4E] hover:bg-[#A0633E] text-white font-bold px-4 py-2 rounded-full text-sm shadow transition-colors md:px-6 md:py-2.5 md:text-base"
-            >
-              Lihat Pesanan
-            </button>
           </div>
         </div>
       )}

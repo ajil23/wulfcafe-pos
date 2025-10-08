@@ -68,7 +68,7 @@ export default function CheckoutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           
           {/* Form Nama Pemesan */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6 ">
             <h2 className="font-bold text-[#313131] text-xl mb-4 md:text-2xl">Informasi Pemesan</h2>
             <label className="block text-[#313131] font-medium mb-2 text-base md:text-lg">
               Nama Pemesan <span className="text-red-500">*</span>
@@ -83,7 +83,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Ringkasan Pesanan */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6 ">
             <h2 className="font-bold text-[#313131] text-xl mb-4 md:text-2xl">Ringkasan Pesanan</h2>
             <div className="space-y-3 mb-4">
               {cartItems.map((item) => (

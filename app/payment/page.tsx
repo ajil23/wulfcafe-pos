@@ -119,7 +119,7 @@ export default function PaymentPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           {/* Order Summary lebih lebar */}
           {cartItems.length > 0 ? (
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6 max-w-4xl mx-auto">
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-[#E3E3E3] mb-6">
               <h2 className="font-bold text-[#313131] text-xl mb-4 md:text-2xl">Ringkasan Pesanan</h2>
               <div className="mb-3 pb-3 border-b">
                 <span className="text-[#5A5A5A]">Nama Pemesan: </span>
@@ -160,7 +160,7 @@ export default function PaymentPage() {
             <>
 
               {/* Payment Methods grid responsive */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredPayments.map((method) => (
                   <button
                     key={method.id}

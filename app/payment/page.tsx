@@ -28,41 +28,6 @@ interface Category {
 
 const paymentMethods: PaymentMethod[] = [
   {
-    id: 'cash',
-    name: 'Tunai',
-    description: 'Bayar langsung di kasir',
-    icon: '💵',
-    category: 'cash'
-  },
-  {
-    id: 'gopay',
-    name: 'GoPay',
-    description: 'Bayar pakai GoPay',
-    icon: 'payment_logo/gopay.png',
-    category: 'ewallet'
-  },
-  {
-    id: 'ovo',
-    name: 'OVO',
-    description: 'Bayar pakai OVO',
-    icon: 'payment_logo/OVO.png',
-    category: 'ewallet'
-  },
-  {
-    id: 'dana',
-    name: 'DANA',
-    description: 'Bayar pakai DANA',
-    icon: 'payment_logo/dana.png',
-    category: 'ewallet'
-  },
-  {
-    id: 'shopee',
-    name: 'ShopeePay',
-    description: 'Bayar pakai ShopeePay',
-    icon: 'payment_logo/spay.png',
-    category: 'ewallet'
-  },
-  {
     id: 'qris',
     name: 'QRIS',
     description: 'Scan QRIS untuk bayar',
@@ -70,34 +35,12 @@ const paymentMethods: PaymentMethod[] = [
     category: 'qris'
   },
   {
-    id: 'bca',
-    name: 'Transfer BCA',
-    description: 'Transfer ke rekening BCA',
-    icon: 'payment_logo/bca.png',
+    id: 'lainnya',
+    name: 'Lainnya ',
+    description: 'Pilih Metode Lain Untuk Membayar',
+    icon: 'payment_logo/xendit.png',
     category: 'bank'
   },
-  {
-    id: 'mandiri',
-    name: 'Transfer Mandiri',
-    description: 'Transfer ke rekening Mandiri',
-    icon: 'payment_logo/mandiri.png',
-    category: 'bank'
-  },
-  {
-    id: 'bri',
-    name: 'Transfer BRI',
-    description: 'Transfer ke rekening BRI',
-    icon: 'payment_logo/bri.png',
-    category: 'bank'
-  },
-];
-
-const categories: Category[] = [
-  { id: 'all', name: 'Semua', icon: '💳' },
-  { id: 'cash', name: 'Tunai', icon: '💵' },
-  { id: 'ewallet', name: 'E-Wallet', icon: '📱' },
-  { id: 'qris', name: 'QRIS', icon: '📲' },
-  { id: 'bank', name: 'Transfer Bank', icon: '🏦' },
 ];
 
 export default function PaymentPage() {
@@ -119,16 +62,16 @@ export default function PaymentPage() {
     }
 
     const savedName = localStorage.getItem('customerName');
-    if(savedName) {
+    if (savedName) {
       setCustomerName(savedName);
     }
   }, []);
-  
+
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const filteredPayments = selectedCategory === 'all' 
-    ? paymentMethods 
+  const filteredPayments = selectedCategory === 'all'
+    ? paymentMethods
     : paymentMethods.filter(method => method.category === selectedCategory);
 
   const handlePayment = () => {
@@ -136,11 +79,11 @@ export default function PaymentPage() {
       alert('Silakan pilih metode pembayaran terlebih dahulu');
       return;
     }
-    
+
     alert(`Memproses pembayaran dengan ${selectedPayment.name}...\nTotal: Rp ${totalPrice.toLocaleString('id-ID')}`);
-    
+
     localStorage.removeItem('wulfCafeCart');
-    
+
     setTimeout(() => {
       window.location.href = '/';
     }, 1500);
@@ -156,7 +99,7 @@ export default function PaymentPage() {
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-4">
-            <button 
+            <button
               onClick={handleBackToMenu}
               className="p-3 hover:bg-[#F9F2ED] rounded-xl transition-colors bg-[#F9F2ED] hover:bg-[#EDD6C8]"
             >
@@ -215,66 +158,37 @@ export default function PaymentPage() {
           {/* Category Filter lebih lebar */}
           {cartItems.length > 0 && (
             <>
-              <div className="flex gap-3 overflow-x-auto pb-4 mb-6 scrollbar-hide max-w-4xl mx-auto">
-                {categories.map((category) => (
-                  <button
-                    key={category.id}
-                    onClick={() => setSelectedCategory(category.id)}
-                    className={`px-5 py-3 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-3 flex-shrink-0 ${
-                      selectedCategory === category.id
-                        ? 'bg-[#C67C4E] text-white shadow-lg'
-                        : 'bg-white text-[#313131] border border-[#E3E3E3] hover:bg-[#F9F2ED] hover:shadow-md'
-                    } md:text-base md:px-6`}
-                  >
-                    <span>{category.name}</span>
-                  </button>
-                ))}
-              </div>
 
               {/* Payment Methods grid responsive */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
                 {filteredPayments.map((method) => (
-  <button
-    key={method.id}
-    onClick={() => setSelectedPayment(method)}
-    className={`bg-white rounded-2xl p-5 shadow-sm border-2 transition-all text-left hover:scale-[1.02] ${
-      selectedPayment?.id === method.id
-        ? 'border-[#C67C4E] bg-[#FFF8F3] shadow-lg'
-        : 'border-[#E3E3E3] hover:border-[#C67C4E]/50'
-    }`}
-  >
-    <div className="flex items-center gap-4">
-      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-lg">
-        {/* Hanya tunai yang pakai emoji, lainnya pakai gambar */}
-        {method.id === 'cash' ? (
-          <div className="text-2xl">{method.icon}</div>
-        ) : (
-          <img 
-            src={method.icon} 
-            alt={method.name} 
-            className="w-8 h-8 object-contain"
-            onError={(e) => {
-              console.log('Gagal load gambar:', method.icon);
-              // Fallback ke teks jika gambar gagal load
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-        )}
-      </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="font-bold text-[#313131] text-lg md:text-xl mb-1">{method.name}</h3>
-        <p className="text-sm text-[#5A5A5A] md:text-base">{method.description}</p>
-      </div>
-      {selectedPayment?.id === method.id && (
-        <div className="w-8 h-8 rounded-full bg-[#C67C4E] flex items-center justify-center flex-shrink-0">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      )}
-    </div>
-  </button>
-))}
+                  <button
+                    key={method.id}
+                    onClick={() => setSelectedPayment(method)}
+                    className={`bg-white rounded-2xl p-5 shadow-sm border-2 transition-all text-left hover:scale-[1.02] ${
+                      selectedPayment?.id === method.id
+                        ? 'border-[#C67C4E] bg-[#FFF8F3] shadow-lg'
+                        : 'border-[#E3E3E3] hover:border-[#C67C4E]/50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-lg">
+                        <img src={method.icon} alt={method.name} className="w-8 h-8 object-contain" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-[#313131] text-lg md:text-xl mb-1">{method.name}</h3>
+                        <p className="text-sm text-[#5A5A5A] md:text-base">{method.description}</p>
+                      </div>
+                      {selectedPayment?.id === method.id && (
+                        <div className="w-8 h-8 rounded-full bg-[#C67C4E] flex items-center justify-center flex-shrink-0">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                ))}
               </div>
 
               {filteredPayments.length === 0 && (
@@ -295,11 +209,10 @@ export default function PaymentPage() {
             <button
               onClick={handlePayment}
               disabled={!selectedPayment}
-              className={`w-full font-bold py-4 rounded-xl transition-all duration-200 text-lg ${
-                selectedPayment
+              className={`w-full font-bold py-4 rounded-xl transition-all duration-200 text-lg ${selectedPayment
                   ? 'bg-[#C67C4E] hover:bg-[#A0633E] text-white shadow-lg hover:shadow-xl hover:scale-[1.02]'
                   : 'bg-[#E3E3E3] text-[#A0A0A0] cursor-not-allowed'
-              } md:text-xl md:py-5`}
+                } md:text-xl md:py-5`}
             >
               {selectedPayment ? `Bayar dengan ${selectedPayment.name}` : 'Pilih Metode Pembayaran'}
             </button>
